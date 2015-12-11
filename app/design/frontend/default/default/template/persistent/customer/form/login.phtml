@@ -1,0 +1,116 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Customer login form template
+ *
+ * @see app/design/frontend/base/default/template/customer/form/login.phtml
+ */
+/** @var $this Mage_Customer_Block_Form_Login */
+?>
+
+<table width="100%" border="0" cellspacing="20" cellpadding="0" style="background-color: none;">
+  <tr>
+    <td>
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="4">
+      <tr valign="top">
+        <td>
+	<div id="login" style="display:block">
+    
+	  <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+	  <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+	   <table width="450" border="0" align="center" cellpadding="0" cellspacing="4">
+	    <tr>
+	      <td>Email Address*: </td>
+	      <td><input type="text" name="login[username]" style="width:220px; value="<?php echo $this->htmlEscape($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address') ?>" /></td>
+	      </tr>
+	    <tr>
+	      <td>Password*: </td>
+	      <td><input type="password" name="login[password]" class="input-text required-entry validate-password" id="pass" title="<?php echo $this->__('Password') ?>" style="width:220px;"/><p><a href="forgotpassword.html" target="_blank" style="color:#FC0;">Forgot Your Password?</a></p>  </td>
+	      </tr>
+	    <tr>
+	      <td>&nbsp;</td>
+	      <td><input type="submit" value="Login" class="submit"/></td>
+	      </tr>
+	  </table>
+	  
+		  <?php echo $this->getChildHtml('form.additional.info'); ?>
+                        <?php echo $this->getChildHtml('persistent.remember.me'); ?>
+                   
+                    <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
+                    
+	  </form>  
+		<h3><br />
+  </h3>    
+ <h3><a href="../create/" onClick="register()">New Customer Registration</a></h3>  
+	    <div id="error" style="color:red; font-family:Arial, Helvetica, sans-serif; font-size:12px;text-align:center;"></div>
+	    
+	    </div>
+	    
+	
+          
+        </td>
+        </tr>
+    </table>
+    
+    </td>
+    <td><table width="400" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr>
+        <td colspan="4">
+        <img src="/media/welcome_txt.gif" alt="" width="394" height="32" />
+        
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+      </table></td>
+    </tr>
+</table>
+   
+	      
+	        
+        
+            
+            
+        <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
+            <input name="context" type="hidden" value="checkout" />
+        <?php endif; ?>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('login-form', true);
+    //]]>
+    </script>
+</div>
+
+
+

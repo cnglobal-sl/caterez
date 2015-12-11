@@ -1,0 +1,41 @@
+
+<?php
+$customer_email = $this->getcustomeremail();
+$url=$this->getposturl();
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo Mage::helper('enquiry')->__('Enquiry Reply') ?></h4></div>
+   <script type="text/javascript">
+            function sendenquiryreply(){
+                editForm.submit($('edit_form').action+'task/sendreply/');
+            }
+   </script>
+  
+    <fieldset>
+    	
+        <table cellspacing="2" class="box-center" width="100%">
+        	<tr>
+        		<td>To</td>
+        		<td><input type="text" size="30" name="enquiry_to" id="enquiry_to" value="<?php echo $customer_email;?>" class="required-entry input-text validate-email"/></td>
+        	</tr>
+        	<tr>
+        		<td>Subject</td>
+        		<td><input type="text" size="30" name="enquiry_subject" id="enquiry_subject" /></td>
+        	</tr>
+        	<tr>
+        		<td>Message</td>
+        		<td><textarea cols="60" rows="10" name="enquiry_message" id="enquiry_message" ></textarea></td>
+        	</tr>
+        	<tr>
+        		<td><input type="hidden" name="id" value="<?php echo $this->getRequest()->getParam('id');?>"/></td>
+        		<td><button name="enquiry_send" id="enquiry_send" class="scalable" onclick="sendenquiryreply();" type="button"><?php echo Mage::helper('enquiry')->__('Send Reply') ?></button></td>
+        	</tr>
+        </table>
+       
+    </fieldset>
+    <script type="text/javascript">
+    	var enquiryreply = new varienForm('enquiryreply', true);
+	</script>
+    
+   
+</div>

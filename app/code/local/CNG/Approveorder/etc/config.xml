@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <CNG_Approveorder>
+            <version>0.0.2</version>
+        </CNG_Approveorder>
+    </modules>
+    	
+    <global>
+		<models>
+            <approveorder>
+                <class>CNG_Approveorder_Model</class>
+                <resourceModel>approveorder_mysql4</resourceModel>
+			</approveorder>
+            <approveorder_mysql4>
+                <class>CNG_Approveorder_Model_Mysql4</class>
+                <entities>
+                    <kitchen>
+                        <table>kitchen</table>
+                    </kitchen>
+                </entities>
+            </approveorder_mysql4>
+        </models>
+	  <helpers>
+            <approveorder>
+				<class>CNG_Approveorder_Helper</class>
+			</approveorder>
+        </helpers>
+	<blocks>
+            <approveorder>
+                <class>CNG_Approveorder_Block</class>
+            </approveorder>
+        </blocks>
+       
+
+		<resources>
+            <approveorder_setup>
+				<setup>
+					<module>CNG_Approveorder</module>
+				</setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </approveorder_setup>
+            <approveorder_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </approveorder_write>
+            <approveorder_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </approveorder_read>
+        </resources>
+    </global>
+    <adminhtml>
+        <menu>
+            <hpkitchen translate="title" module="approveorder">
+                <title>Kitch View</title>
+                <sort_order>10</sort_order>
+                <action>approveorder/admin</action>
+            </hpkitchen>
+        </menu>
+    </adminhtml>
+	<frontend>
+        <routers>
+            <approveorder>
+                <use>standard</use>
+                <args>
+                    <module>CNG_Approveorder</module>
+                    <frontName>approveorder</frontName>
+                </args>
+            </approveorder>
+        </routers>
+    </frontend>
+</config>

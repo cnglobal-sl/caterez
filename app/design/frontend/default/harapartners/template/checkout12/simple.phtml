@@ -1,0 +1,306 @@
+<?php
+$customer=$this->getCustomer();
+$shippingAddress = $customer->getDefaultShippingAddress();
+?>
+
+<?php $datepick = 1; ?>
+
+<?php  $item_count = Mage::getSingleton('checkout/session')->getQuote()->getItems_count(); ?>
+<style type="text/css">
+th {
+	width:30%;
+	text-align:left
+}
+
+td {
+	width:50%;
+	text-align:left
+}
+
+</style>
+
+<!-- Added for the datapicker -->
+<link type="text/css" href="<?php echo $this->getSkinUrl('css/smoothness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" />	
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery-1.3.2.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery-ui-1.7.2.custom.min.js') ?>"></script>
+<script type="text/javascript">
+var $j = jQuery.noConflict();
+$j(document).ready(function(){
+    $j("#datepicker").datepicker({
+		minDate: 0,
+		beforeShowDay: $j.datepicker.noWeekends,
+		dateFormat: 'D dd/mm/yy',
+		inline: true
+	});
+$j(document).ready(function(){
+    $j("#datepicker1").datepicker({
+		minDate: 0,
+		dateFormat: 'D dd/mm/yy',
+		inline: true
+	});
+});
+});
+
+
+
+function hideApprove(){
+	document.getElementById('approve').style.display = "none";
+}
+
+function showApprove(){
+	document.getElementById('approve').style.display = "block";
+}
+</script>
+<script type="text/javascript">
+<!--
+
+var counter = 0;
+var
+
+
+function init() {
+	document.getElementById('moreFields').onclick = moreFields;
+	moreFields();
+}
+
+
+function moreFields() {
+	<?php $datepick++; ?>
+	counter++;
+	var newFields = document.getElementById('readroot').cloneNode(true);
+	newFields.id = '';
+	newFields.style.display = 'block';
+	var newField = newFields.childNodes;
+	for (var i=0;i<newField.length;i++) {
+		var theName = newField[i].name
+		var theId = newField[i].id
+		if (theName)
+			newField[i].name = theName + counter;
+			if(theName == 'datepicker')
+				newField[i].id= theId + counter;
+	}
+	var insertHere = document.getElementById('writeroot');
+	insertHere.parentNode.insertBefore(newFields,insertHere);
+}
+
+// -->
+</script>
+
+  
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="page-head">
+    <h3><?php echo Mage::helper('checkout')->__('Check Out') ?></h3>
+</div>
+<?php 
+//echo '<pre>';
+//print_r($this);
+//echo '</pre>';
+//exit;
+?>
+
+<form action="http://caterez.charuka.com/checkout/onepage/saveOrder/<?php //echo $this->getFormAction(); ?>" id="simpleForm" method="post">
+<?php echo $this->getBlockHtml('formkey')?>
+<input type="hidden" name="customer_id" value="<?php echo $customer->getId() ?>" />
+<table width="100%">
+  <tr>
+	<td>
+      <fieldset class="group-select">
+        <h4 class="legend"><?php echo Mage::helper('checkout')->__('Register Information') ?></h4>
+          <table width="90%">
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('First Name') ?> <span class="required">*</span></th>
+                <td><input name="firstname" id="firstname" size="40px" value="<?php echo $customer->getFirstname()?>" class="required-entry input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Last Name') ?> <span class="required">*</span></th>
+                <td><input name="lastname" id="lastname" size="40px" value="<?php echo $customer->getLastname()?>" class="required-entry input-text" type="text" /></td>
+            </tr>
+            <tr>
+            	<th><?php echo Mage::helper('checkout')->__('Email Address') ?> <span class="required">*</span></th>
+                <td><input name="email" id="email" size="40px" value="<?php echo $customer->getEmail()?>" class="required-entry input-text validate-email" type="text" /></td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Company Name') ?> <span class="required">*</span></th>
+                <td><input name="company" id="company" size="40px" value="" class="required-entry input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Phone') ?></th>
+                <td><input name="telephone" id="telephone" size="40px" value="" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Address') ?></th>
+                <td><input name="street" id="street" size="40px" value="" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Department') ?></th>
+                <td><input name="department" id="department" size="40px" value="" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Cost Centre') ?></th>
+                <td><input name="costcentre" id="costcentre" size="40px" value="" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Delivery Venue') ?></th>
+                <td><input name="deliveryvenue" id="deliveryvenue" size="40px" value="" class="input-text" type="text" /></td>
+            </tr>
+          </table>
+      </fieldset>
+	</td>
+	
+	<td>
+      <fieldset class="group-select">
+        <h4 class="legend"><?php echo Mage::helper('checkout')->__('Delivery Information') ?></h4>
+          <table width="90%">
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Number of Guest') ?></th>
+                <td><input name="guest_number" id="guest_number" size="40px" value="" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Title of Function') ?></th>
+                <td><input name="function_title" id="function_title" size="40px" value="" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+            	<th><?php echo Mage::helper('checkout')->__('Special Request') ?></th>
+                <td><textarea name="request" id="request" class="input-text" rows="5" cols="37"></textarea></td>
+            </tr>
+            <tr>
+                <th>
+    				<label for="datepicker"><?php echo $this->__('Delivery Date') ?> <span class="required">*</span></label>
+				</th>
+                <td><input type="text" name="datepicker" id="datepicker" class="required-entry input-text" />
+				</td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Delivery Time') ?><span class="required">*</span></th>
+                <td>
+                  <select name="delivery_time" id="delivery_time" class="required-entry input-text">
+                	<option value=""></option>
+                	<?php $start = 6; $end = 24?>
+                	<?php for($i=$start;$i<12;$i++):?>
+						<option value="<?php echo $i . ':00'?>"><?php echo $i . ':00am'?></option>
+						<option value="<?php echo $i . ':15'?>"><?php echo $i . ':15am'?></option>
+						<option value="<?php echo $i . ':30'?>"><?php echo $i . ':30am'?></option>
+						<option value="<?php echo $i . ':45'?>"><?php echo $i . ':45am'?></option>
+					<?php endfor;?>
+                	<?php for($i=12;$i<$end;$i++):?>
+                		<?php $j = ($i==12) ? $i : $i-12?>
+						<option value="<?php echo $i . ':00'?>"><?php echo $j . ':00pm'?></option>
+						<option value="<?php echo $i . ':15'?>"><?php echo $j . ':15pm'?></option>
+						<option value="<?php echo $i . ':30'?>"><?php echo $j . ':30pm'?></option>
+						<option value="<?php echo $i . ':45'?>"><?php echo $j . ':45pm'?></option>
+					<?php endfor;?>
+                  </select>
+				</td>
+            </tr>
+            <tr>
+                <th><?php echo Mage::helper('checkout')->__('Cleaning Time') ?><span class="required">*</span></th>
+                <td>
+                  <select name="cleaning_time" id="cleaning_time" class="required-entry input-text">
+                	<option value=""></option>
+                	<?php $start = 6; $end = 24?>
+                	<?php for($i=$start;$i<12;$i++):?>
+						<option value="<?php echo $i . ':00'?>"><?php echo $i . ':00am'?></option>
+						<option value="<?php echo $i . ':15'?>"><?php echo $i . ':15am'?></option>
+						<option value="<?php echo $i . ':30'?>"><?php echo $i . ':30am'?></option>
+						<option value="<?php echo $i . ':45'?>"><?php echo $i . ':45am'?></option>
+					<?php endfor;?>
+                	<?php for($i=12;$i<$end;$i++):?>
+                		<?php $j = ($i==12) ? $i : $i-12?>
+						<option value="<?php echo $i . ':00'?>"><?php echo $j . ':00pm'?></option>
+						<option value="<?php echo $i . ':15'?>"><?php echo $j . ':15pm'?></option>
+						<option value="<?php echo $i . ':30'?>"><?php echo $j . ':30pm'?></option>
+						<option value="<?php echo $i . ':45'?>"><?php echo $j . ':45pm'?></option>
+					<?php endfor;?>
+                  </select>
+				</td>
+            </tr>
+          </table>
+      </fieldset>
+	</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      	<div>      	
+        	<?php echo Mage::helper('checkout')->__('Do you need Manager Approval?') ?>&nbsp;&nbsp;
+        	<input type="radio" name="need_approval" value="0" checked="checked" onclick="hideApprove()"/> No&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="need_approval" value="1"  onclick="showApprove()"/> Yes
+        </div>
+        <div id="approve" class="input-box" style="display: none">
+        	<b><?php echo Mage::helper('checkout')->__('Manager Approval') ?></b>&nbsp;&nbsp;
+          	<input name="manager_email" id="manager_email" size="40px" value="" class="required-entry input-text validate-email" type="text" />
+        </div>
+      </table>
+  </tr>
+</table>
+ <h4 class="legend">Advanced Delivery</h4>
+
+
+    <div class="button-set">
+        <p class="required"><?php echo Mage::helper('checkout')->__('* Required Fields') ?></p>
+        <button class="form-button" type="submit"><img src="/media/btn_place_order.gif" width="224" height="40" /></button>
+    </div>
+</form>
+<script type="text/javascript">
+    var contactForm = new VarienForm('simpleForm', true);
+</script>
+
+
+
+
+<div id="readroot" style="display: none">
+	<input type="button" value="Remove This Time Split"
+		onclick="this.parentNode.parentNode.removeChild(this.parentNode);" /><br /><br />
+
+	<?php
+ 
+	$quote = Mage::getSingleton('checkout/session')->getQuote();
+ 	$cartItems = $quote->getAllVisibleItems();
+ 	$item_num =0;
+  	foreach ($cartItems as $item) { $item_count = 0;
+  	
+  	?>
+    	
+    	<?php echo $item->getName(); ?> : <select name="item_qty_<?php echo $item_num; ?>_split"><?php while($item->getQty()>=$item_count){?><option><?php echo $item_count; ?></option><?php $item_count++;}?></select><br />
+	<?php $item_num++; } ?>
+	
+	
+	<input name="item_id" type="hidden" value="<?php echo $item->getName(); ?>" /><br />
+
+	Delivery date:<input type="text" name="datepicker" id="datepicker" class="required-entry input-text" /><br />
+	
+	
+	
+	Delivery time:<input type="text" id="del_time1" /><br />
+
+</div>
+
+<form method="post" action="">
+
+	<span id="writeroot"></span>
+
+	<input type="button" id="moreFields" onClick="init();" value="Add Time Split" />
+	
+
+</form>
+<script type="text/javascript">
+
+<?php
+	
+ 	for($i = 1; $i<=$item_count; $i++){ ?>
+ 		var item_<?php echo $i; ?>;
+ 	<?php
+ 	}
+ 	?>
+ 	<?php
+ 	$quote = Mage::getSingleton('checkout/session')->getQuote();
+ 	$cartItems = $quote->getAllVisibleItems();
+ 	$item_num =1;
+ 	
+  	foreach ($cartItems as $item) { ?>
+  		var item_<?php echo $item_num; ?> = <?php echo $item->getQty(); ?>;
+	<?php	$item_num++; }  ?>
+
+	alert(item_1);
+
+
+</script>

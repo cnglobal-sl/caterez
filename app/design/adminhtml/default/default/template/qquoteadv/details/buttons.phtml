@@ -1,0 +1,39 @@
+<?php
+$status = Mage::registry('qquote_data')->getData('status');
+
+$btnCreateOrder = $this->getLayout()->createBlock('adminhtml/widget_button');
+$btnCreateOrder->setLabel($this->__('Create Order'));
+$btnCreateOrder->setClass('save');
+
+if ( $status == Ophirah_Qquoteadv_Model_Status::STATUS_PROPOSAL || $status == Ophirah_Qquoteadv_Model_Status::STATUS_PROPOSAL_SAVED ) {
+    $onclick = "if(isCheckRadio()){ $('redirect2neworder').value=1; $('loading-mask').show(); editForm.submit(); }else{ return false;}";    
+} else {
+	$btnCreateOrder->setClass('disabled');
+    if ( $status == Ophirah_Qquoteadv_Model_Status::STATUS_ORDERED || $status == Ophirah_Qquoteadv_Model_Status::STATUS_CONFIRMED ) { 
+       $onclick = 'return false;';	
+    }else{
+      $onclick = 'showMsg(); return false;';	
+    }
+}
+$btnCreateOrder->setOnclick($onclick);
+?>
+
+<?php
+
+$button = $this->getLayout()->createBlock('adminhtml/widget_button');
+$button->setLabel($this->__('Submit Quote'));
+$button->setClass('save');
+
+if ( $status == Ophirah_Qquoteadv_Model_Status::STATUS_ORDERED || $status == Ophirah_Qquoteadv_Model_Status::STATUS_CONFIRMED ) { 
+  $button->setClass('disabled'); 
+  $button->setOnclick("return false;");
+}else{
+  $onclick = "$('loading-mask').show(); 
+  	if(checkUploadTitle()) { saveAndContinueEdit(); }";
+  $button->setOnclick($onclick);
+}
+?>
+
+<fieldset>
+<?php echo $button->_toHtml() . '&nbsp;&nbsp;' . $btnCreateOrder->_toHtml(); ?>
+</fieldset>

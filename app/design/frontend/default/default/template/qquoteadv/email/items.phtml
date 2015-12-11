@@ -1,0 +1,120 @@
+<?php $_quote = $this->getQuote();?>
+<table cellspacing="0" cellpadding="0" border="0" width="650" style="border:1px solid #EAEAEA;">
+    <thead>
+        <tr>
+            <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Item') ?></th>
+            <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Sku') ?></th>
+            <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Tier/Qty') ?></th>
+           
+			<?php if(!$this->isSetAutoProposal()): ?>
+			<th align="right" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px">&nbsp;</th>
+			<?php else: ?>
+			<th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Price') ?></th>
+            <th align="right" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Subtotal') ?></th>
+			<?php endif;?>
+			
+        </tr>
+    </thead>
+    <?php $i=0; foreach ($this->getAllItems() as $_item): ?>
+    <?php if($_item->getParentItem()) continue; else $i++; ?>
+    <tbody<?php echo $i%2 ? ' bgcolor="#F6F6F6"' : '' ?>>
+        <?php echo $this->getLayout()->getBlock('qquoteadv_item')->setItem($_item)->toHtml(); ?>
+    </tbody>
+    <?php endforeach; ?>
+
+    <?php if($this->isSetAutoProposal()): ?>
+    <?php $colspan=4; ?>
+    <tbody>
+        <tr>
+            <td colspan="<?php echo ($colspan+1) ?>" style="padding:0px 0px;"  align="right">
+                <table cellspacing="0" cellpadding="0" border="0" style="margin:0px; padding:0px;"><tbody>
+            <?php Mage::register('current_quote', $_quote); ?>
+            <?php echo $this->getChildHtml('quote_totals') ?>
+               <?php Mage::unregister('current_quote'); ?>
+                         </tbody></table>
+            </td>  
+        </tr>    
+     </tbody>
+    
+     <tbody>
+     <tr>
+            <td colspan="<?php echo ($colspan+1) ?>" style="padding:20px 6px 7px;  height: 44px;" align="right">
+            <a href="<?php echo Mage::helper('qquoteadv')->getAutoLoginUrl($_quote); ?>" 
+               style="background:url(<?php echo $this->getSkinUrl('images/qquoteadv/checkout-btn.png') ?>) no-repeat #ffa400; width: 151px; 
+               height: 21px; display:block; color: white; font-size: 15px; font-weight:bold; font-family: Arial, Helvetica, sans-serif;
+font-size: 15px; text-decoration:none; padding: 12px 24px 11px 24px;"><?php echo $this->__('Proceed to Checkout'); ?></a>
+         </td>
+        </tr>
+        <tr>
+            <td colspan="<?php echo ($colspan+1) ?>" style="padding:0px 6px 20px 6px; " align="right">  
+            <a href ="<?php echo Mage::helper('qquoteadv')->getAutoLoginUrl($_quote, 1); ?>" ><?php echo $this->__('Visit customer dashboard for more options'); ?></a>
+            </td>
+        </tr>
+    </tbody>
+    
+    <?php endif;?>
+    
+    <?php /*if($this->isSetAutoProposal()): $colspan=4;  ?>
+    <tbody>
+    	<?php $total =  $this->getSubTotal(); ?>
+        <tr class="subtotal">
+            <td colspan="<?php echo $colspan ?>" align="right" style="padding:3px 9px"><?php echo $this->__('Subtotal'); ?></td>
+            <td align="right" style="padding:3px 9px"><span class="price">
+            <?php if($total !== false): ?>
+		<?php echo Mage::helper('core')->currency($total,true,false); ?>
+	     <?php else: ?>
+            	<a href="<?php echo Mage::helper('qquoteadv')->getAutoLoginUrl($_quote); ?>">Login</a></span></td>
+             <?php endif; ?>
+            </span></td>
+        </tr>
+        <?php
+        
+	$sPrice        =  $this->getQuote()->getShippingPrice();
+	$shippingType =  $this->getQuote()->getShippingType();
+	if($shippingType=='I'){
+	    $sLabel = $this->__('Shipping & Handling price per Item');
+	}elseif($shippingType=='O'){
+	    $sLabel = $this->__('Fixed Shipping & Handling price');
+	}else{
+	    $sLabel    = $this->__("Shipping & Handling price varies");
+	    $sPrice = false;
+	}     	
+        
+        ?>
+        <tr class="shipping">
+            <td colspan="<?php echo $colspan ?>" align="right" style="padding:3px 9px"><?php echo $sLabel; ?></td>
+            <td align="right" style="padding:3px 9px"><span class="price">
+            <?php if($sPrice === false): ?>
+            	<a href="<?php echo Mage::helper('qquoteadv')->getAutoLoginUrl($_quote); ?>">Login</a>
+            <?php else: ?>
+                 <?php echo Mage::helper('core')->currency($sPrice,true,false); ?>
+            <?php endif; ?>
+            </span></td>
+        </tr>
+        <?php $grandTotal = $this->getGrandTotal(); ?>
+        <tr class="grand_total">
+            <td colspan="<?php echo $colspan ?>" align="right" style="padding:3px 9px"><strong><?php echo $this->__('Grand Total'); ?></strong></td>
+            <td align="right" style="padding:3px 9px"><strong><span class="price">
+            	<?php if($grandTotal !== false): ?>
+			<?php echo Mage::helper('core')->currency($grandTotal,true,false); ?>
+            	<?php else: ?>
+            		<a href="<?php echo Mage::helper('qquoteadv')->getAutoLoginUrl($_quote); ?>">Login</a>
+            	<?php endif; ?>	
+            </span></strong></td>
+        </tr>  
+        <tr>
+            <td colspan="<?php echo ($colspan+1) ?>" style="padding:20px 6px; height: 44px;" align="right">
+            <a href="<?php echo Mage::helper('qquoteadv')->getAutoLoginUrl($_quote); ?>" 
+               style="background:url(<?php echo $this->getSkinUrl('images/qquoteadv/checkout-btn.png') ?>) no-repeat #ffa400; width: 151px; 
+               height: 21px; display:block; color: white; font-size: 15px; font-weight:bold; font-family: Arial, Helvetica, sans-serif;
+font-size: 15px; text-decoration:none; padding: 12px 24px 11px 24px;"><?php echo $this->__('Proceed to Checkout'); ?></a>
+         </td>
+        </tr>
+        <tr>
+            <td colspan="<?php echo ($colspan+1) ?>" style="padding:10px 6px; " align="right">  
+            <a href ="<?php echo Mage::helper('qquoteadv')->getAutoLoginUrl($_quote, 1); ?>" ><?php echo $this->__('Visit customer dashboard for more options'); ?></a>
+            </td>
+        </tr>
+    </tbody>
+    <?php endif; */ ?>   
+</table>

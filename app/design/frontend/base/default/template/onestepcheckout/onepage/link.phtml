@@ -1,0 +1,5 @@
+<?php if ($this->isOnestepCheckoutAllowed()):?>
+<!-- <button type="button" title="<?php //echo $this->__('Proceed to Checkout') ?>" class="button btn-proceed-checkout btn-checkout<?php //if (!$this->checkEnable()){ echo 'no-checkout'; }?>"<?php  //if (!$this->checkEnable()){ echo ' disabled="disabled" ';} ?> onclick="window.location='<?php //echo $this->getOnestepCheckoutUrl() ?>';"><span><span><?php //echo $this->__('Proceed to Checkout') ?></span></span></button> -->
+
+<a href="http://caterez.charuka.com/onestepcheckout/<?php //echo $this->getCheckoutUrl()?>"><img src="<?php echo $this->getSkinUrl('images/btn_proceed_to_checkout.gif');?>" alt="<?php echo Mage::helper('checkout')->__('Proceed to Checkout');?>" /></a>
+<?php endif?>

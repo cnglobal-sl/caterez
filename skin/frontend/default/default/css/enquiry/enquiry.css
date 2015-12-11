@@ -1,0 +1,19 @@
+#enquiry{
+	/*height:25px;
+	width:100px;
+	background:transparent url(enquiry.jpg) no-repeat scroll 0 0;
+	text-align:center;
+	padding-bottom:5px;*/
+}
+.enquiry_link{
+	
+	color:#FFFFFF;
+	font-weight:bold;
+	text-decoration:none;
+	padding-top:3px;
+	vertical-align:middle;
+}
+.enquiry_link:hover{
+	text-decoration:none;
+	color:#FFFFFF;
+}

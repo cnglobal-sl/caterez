@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="root">
+           <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+       </reference>
+    </default>
+
+    <approveorder_sales_amend>
+        <update handle="customer_account"/>
+        <reference name="content">
+            <block type="approveorder/amend" name="approveorder.sales.amend" template="approveorder/amend.phtml"/>
+            <block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>
+        </reference>
+    </approveorder_sales_amend>
+</layout>

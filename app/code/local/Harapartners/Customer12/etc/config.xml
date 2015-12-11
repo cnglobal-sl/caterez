@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Harapartners_Customer>
+            <version>0.0.1</version>
+        </Harapartners_Customer>
+    </modules>
+    	
+    <global>
+		<rewrite>
+			<harapartners_customer_account>
+				<from>#^/customer/account/#</from>
+				<to>/customer/account/</to>
+			</harapartners_customer_account>
+		</rewrite>
+	</global>
+
+	<frontend>
+        <routers>
+            <harapartners_customer>
+                <use>standard</use>
+                <args>
+                    <module>Harapartners_Customer</module>
+                    <frontName>customer</frontName>
+                </args>
+            </harapartners_customer>
+        </routers>
+    </frontend>
+</config>

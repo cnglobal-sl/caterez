@@ -1,0 +1,103 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Create account form template
+ *
+ * @see app/design/frontend/base/default/template/customer/form/register.phtml
+ */
+/** @var $this Mage_Customer_Block_Form_Register */
+?>
+<div class="account-create">
+    <div class="page-title">
+
+    </div>
+    <?php echo $this->getChildHtml('form_fields_before')?>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+   <table><tr><td>
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
+         <input type="hidden" name="hp_catereztype" value="register"/>
+  <table width="450" border="0" align="center"  cellpadding="0" cellspacing="4">
+    <tr>
+      <td width="116">First Name*:</td>
+      <td width="322"><input name="firstname" type="text" size="35" id="firstname"></td>
+      </tr>
+    <tr>
+      <td>Last Name*: </td>
+      <td><input name="lastname" type="text" size="35" id="lastname"></td>
+      </tr>
+    <tr>
+      <td>Email Address*: </td>
+      <td><input name="email" type="text" id="email" size="35"></td>
+      </tr>
+    <tr>
+      <td>Password*: </td>
+      <td><input type="password" name="password" size="35" id="password"></td>
+      </tr>
+    <tr>
+      <td>Confirm Password*:</td>
+      <td><input type="password" name="confirmation" size="35" id="confirmation"></td>
+      </tr>
+    <tr>
+      <td>Company Name*: </td>
+      <td><input type="text" name="company" size="35" id="company"></td>
+      </tr>
+    <tr>
+      <td>Phone*: </td>
+      <td><input type="text" name="phone" size="35" id="phone"></td>
+      </tr>
+    <tr>
+      <td>Address*: </td>
+      <td><input type="text" name="address" size="35" id="address"></td>
+      </tr>
+    <tr>
+      <td>Department: </td>
+      <td><input type="text" name="department" size="35"></td>
+      </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input type="submit" value="Register" class="submit" style="background-color: #6EC129; border: 1px solid #666; color: #FFF; padding: 4px;"></td>
+      </tr>
+  </table>
+    </form>
+      <br />
+   <h3><a href="#" onClick="login()">Back to Existing Customer</a></h3>
+ </td> <td colspan="4">
+        <img src="/media/welcome_txt.gif" alt="" width="394" height="32" />
+ 
+ </td>
+ </tr>
+ </table>
+    <script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('form-validate', true);
+        <?php if($this->getShowAddressFields()): ?>
+        new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+        <?php endif; ?>
+    //]]>
+    </script>
+</div>

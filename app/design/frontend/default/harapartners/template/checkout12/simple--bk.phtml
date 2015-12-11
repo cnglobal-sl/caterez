@@ -1,0 +1,163 @@
+<?php
+$customer=$this->getCustomer();
+$shippingAddress = $customer->getDefaultShippingAddress();
+//$street = $shippingAddress->getStreet();
+//if(is_array($street)){
+//	$street0 = $street[0];
+//} else {
+//	$street0 = $street;
+//}
+?>
+<!-- Added for the datapicker -->
+<link type="text/css" href="<?php echo $this->getSkinUrl('css/smoothness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" />	
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery-1.3.2.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery-ui-1.7.2.custom.min.js') ?>"></script>
+<script type="text/javascript">
+var $j = jQuery.noConflict(); 
+$j(document).ready(function(){
+    $j("#datepicker").datepicker({
+		minDate: 0,
+		beforeShowDay: $j.datepicker.noWeekends,
+		inline: true,
+		dateFormat: 'dd/mm/yy'
+	});
+});
+</script>
+
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<h2 style="font-size:2.2em; color:#9C0;margin:0px;"><?php echo Mage::helper('checkout')->__('Check Out') ?></h2>
+<form action="<?php echo $this->getFormAction(); ?>" id="simpleForm" method="post">
+<?php echo $this->getBlockHtml('formkey')?>
+<input type="hidden" name="customer_id" value="<?php echo $customer->getId() ?>" />
+<table width="100%">
+  <tr>
+	<td>	 
+      <fieldset class="group-select" style="min-height:260px;">
+	  <h3><?php echo Mage::helper('checkout')->__('Register Information') ?></h3>
+          <table width="90%">
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('First Name') ?> <span class="required">*</span></td>
+                <td><input name="firstname" id="firstname" size="40px" value="<?php echo $customer->getFirstname()?>" class="required-entry input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Last Name') ?> <span class="required">*</span></td>
+                <td><input name="lastname" id="lastname" size="40px" value="<?php echo $customer->getLastname()?>" class="required-entry input-text" type="text" /></td>
+            </tr>
+            <tr>
+            	<td><?php echo Mage::helper('checkout')->__('Email Address') ?> <span class="required">*</span></td>
+                <td><input name="email" id="email" size="40px" value="<?php echo $customer->getEmail()?>" class="required-entry input-text validate-email" type="text" /></td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Company Name') ?> <span class="required">*</span></td>
+                <td><input name="company" id="company" size="40px" value="<?php echo $shippingAddress->getCompany()?>" class="required-entry input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Phone') ?></td>
+                <td><input name="telephone" id="telephone" size="40px" value="<?php echo $shippingAddress->getTelephone()?>" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Address') ?></td>
+                <td><input name="street" id="street" size="40px" value="<?php echo $shippingAddress->getStreet(1) ?>" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Department') ?></td>
+				<td><input name="department" id="department" size="40px" value="<?php echo $shippingAddress->getStreet(2) ?>" class="input-text" type="text" /></td>
+            </tr>
+
+
+          </table>
+      </fieldset>
+	</td>
+	
+	<td>
+	
+      <fieldset class="group-select" style="min-height:260px;">
+	  <h3><?php echo Mage::helper('checkout')->__('Delivery Information') ?></h3>
+          <table width="90%">
+		    <tr>
+                <td><?php echo Mage::helper('checkout')->__('Delivery Venue') ?><span class="required">*</span></td>
+                <td><input name="deliveryvenue" id="deliveryvenue" size="40px" value="" class="required-entry input-text" type="text" /></td>
+            </tr>
+		    <tr>
+                <td><?php echo Mage::helper('checkout')->__('Cost Centre') ?><span class="required">*</span></td>
+                <td><input name="costcentre" id="costcentre" size="40px" value="" class="required-entry input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Number of Guests') ?><span class="required">*</span></td>
+                <td><input name="guest_number" id="guest_number" size="40px" value="" class="required-entry input-text" type="text" /></td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Title of Function') ?></td>
+                <td><input name="function_title" id="function_title" size="40px" value="" class="input-text" type="text" /></td>
+            </tr>
+            <tr>
+            	<td><?php echo Mage::helper('checkout')->__('Special Request') ?></td>
+                <td><textarea name="request" id="request" class="input-text" rows="5" cols="37"></textarea></td>
+            </tr>
+            <tr>
+                <td>
+    				<label for="datepicker"><?php echo $this->__('Delivery Date') ?> <span class="required">*</span></label>
+				</td>
+                <td><input type="text" name="datepicker" id="datepicker" class="required-entry input-text" size="30"/>
+				</td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Delivery Time') ?><span class="required">*</span></td>
+                <td>
+                  <select name="delivery_time" id="delivery_time" class="required-entry input-text">
+                	<option value=""></option>
+                	<?php $start = 6;?>
+                	<?php for($i=6;$i<12;$i++):?>
+						<option value="<?php echo $i . ':00'?>"><?php echo $i . ':00'?> AM</option>
+						<option value="<?php echo $i . ':15'?>"><?php echo $i . ':15'?> AM</option>
+						<option value="<?php echo $i . ':30'?>"><?php echo $i . ':30'?> AM</option>
+						<option value="<?php echo $i . ':45'?>"><?php echo $i . ':45'?> AM</option>
+					<?php endfor;?>
+                  </select>
+				</td>
+            </tr>
+            <tr>
+                <td><?php echo Mage::helper('checkout')->__('Cleaning Time') ?><span class="required">*</span></td>
+                <td>
+                  <select name="cleaning_time" id="cleaning_time" class="required-entry input-text">
+                	<option value=""></option>
+                	<?php $start = 6;?>
+                	<?php for($i=6;$i<12;$i++):?>
+						<option value="<?php echo $i . ':00'?>"><?php echo $i . ':00'?> AM</option>
+						<option value="<?php echo $i . ':15'?>"><?php echo $i . ':15'?> AM</option>
+						<option value="<?php echo $i . ':30'?>"><?php echo $i . ':30'?> AM</option>
+						<option value="<?php echo $i . ':45'?>"><?php echo $i . ':45'?> AM</option>
+					<?php endfor;?>
+                  </select>
+				</td>
+            </tr>
+          </table>
+      </fieldset>
+	</td>
+  </tr>
+  
+  
+    <tr>
+    <td colspan="2" bgcolor="#fad6c5">
+      <table width="100%" border="0" cellpadding="0" cellspacing="8">
+        <tr>
+          <td><h3><?php echo Mage::helper('checkout')->__('Manager Approval') ?><h3>
+            <input name="manager_email" id="manager_email" size="40px" value="" class="input-text validate-email" type="text" />
+			<p style="font-size:11px;color:999;">* Enter manager's email for approval request</p>
+          </td>
+          </tr>
+        
+      </table>
+	</td>
+    </tr>
+  
+  
+</table>
+    <div class="button-set">
+        <p class="required"><?php echo Mage::helper('checkout')->__('* Required Fields') ?></p>
+        <button class="form-button" type="submit"><img src="<?php echo $this->getSkinUrl('images/btn_place_order.gif') ?>" alt="" width="224" height="40" /></button>
+    </div>
+</form>
+<script type="text/javascript">
+    var contactForm = new VarienForm('simpleForm', true);
+</script>

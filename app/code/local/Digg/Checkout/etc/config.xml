@@ -1,0 +1,40 @@
+    <?xml version="1.0" encoding="UTF-8"?>
+    <config>
+        <modules>
+            <Digg_Checkout>
+                <version>0.0.2</version>
+            </Digg_Checkout>
+        </modules>
+        <global>
+            <models>
+                <checkout>
+                    <rewrite>
+                        <type_onepage>Digg_Checkout_Model_Type_Onepage</type_onepage>
+                    </rewrite>
+                </checkout>
+            </models>
+
+            <blocks>
+                <checkout>
+                    <rewrite>
+                        <onepage_shipping_method>Digg_Checkout_Block_Onepage_Shipping_Method</onepage_shipping_method>
+                    </rewrite>
+                </checkout>
+            </blocks>
+        </global>
+
+        <frontend>
+            <routers>
+                <checkout>
+                    <args>
+                        <modules>
+                            <checkoutdigg before="Mage_Checkout">CnGlobal_Checkout</checkoutdigg>
+                        </modules>
+                    </args>
+                </checkout>
+            </routers>
+        </frontend>
+
+    </config>
+
+

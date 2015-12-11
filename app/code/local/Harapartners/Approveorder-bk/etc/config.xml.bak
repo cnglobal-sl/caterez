@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Harapartners_Approveorder>
+            <version>0.0.8</version>
+        </Harapartners_Approveorder>
+    </modules>
+    	
+    <global>
+		<models>
+            <approveorder>
+                <class>Harapartners_Approveorder_Model</class>
+                <resourceModel>approveorder_mysql4</resourceModel>
+			</approveorder>
+            <approveorder_mysql4>
+                <class>Harapartners_Approveorder_Model_Mysql4</class>
+                <entities>
+                    <kitchen>
+                        <table>kitchen</table>
+                    </kitchen>
+                </entities>
+            </approveorder_mysql4>
+        </models> 
+		
+		<events>
+			<order_save_after>
+				<observers>
+					<harapartners_approveorder_observer>
+						<type>model</type>
+						<class>approveorder/observer</class>
+						<method>setOrderStatus</method>
+					</harapartners_approveorder_observer>
+				</observers>
+			</order_save_after>
+		<!--
+			<checkout_type_onepage_save_order>
+				<observers>
+					<harapartners_approveorder_observer>
+						<type>model</type>
+						<class>approveorder/observer</class>
+						<method>setDeliveryDate</method>
+					</harapartners_approveorder_observer>
+				</observers>
+			</checkout_type_onepage_save_order>
+			<checkout_type_onepage_save_order_after>
+				<observers>
+					<harapartners_approveorder_observer>
+						<type>model</type>
+						<class>approveorder/observer</class>
+						<method>sendEmail</method>
+					</harapartners_approveorder_observer>
+				</observers>
+			</checkout_type_onepage_save_order_after>
+		-->
+	    </events>
+
+        <helpers>
+            <approveorder>
+				<class>Harapartners_Approveorder_Helper</class>
+			</approveorder>
+        </helpers>
+
+        <blocks>
+            <approveorder>
+                <class>Harapartners_Approveorder_Block</class>
+            </approveorder>
+        </blocks>
+
+		<resources>
+            <approveorder_setup>
+				<setup>
+					<module>Harapartners_Approveorder</module>
+				</setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </approveorder_setup>
+            <approveorder_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </approveorder_write>
+            <approveorder_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </approveorder_read>
+        </resources>
+    </global>
+    <adminhtml>
+        <menu>
+            <hpkitchen translate="title" module="approveorder">
+                <title>Kitch View</title>
+                <sort_order>10</sort_order>
+                <action>approveorder/admin</action>
+            </hpkitchen>
+        </menu>
+    </adminhtml>
+	<frontend>
+        <routers>
+            <Harapartners_Approveorder>
+                <use>standard</use>
+                <args>
+                    <module>Harapartners_Approveorder</module>
+                    <frontName>approveorder</frontName>
+                </args>
+            </Harapartners_Approveorder>
+        </routers>
+    </frontend>
+</config>

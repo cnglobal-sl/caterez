@@ -1,0 +1,98 @@
+<?php if (!Mage::registry('current_category')) return ?>
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Category left navigation
+ *
+ * @see Mage_Catalog_Block_Navigation
+ */
+?>
+        <div>
+        <ul id="nav_vert">
+		<!--<li class="level0 nav-online-catering-menu.html active parent">
+<a href="http://caterez.charuka.com/online-catering-menu.html">Online Catering Menu</a>
+		<ul class="level0">
+<li class="level1 nav-online-catering-menu-morning-afternoon-tea.html"><a href="http://caterez.charuka.com/online-catering-menu/morning-afternoon-tea.html">Morning / Afternoon Tea</a></li>
+<li class="level1 nav-online-catering-menu-lunch-sandwiches-pizza.html"><a href="http://caterez.charuka.com/online-catering-menu/lunch-sandwiches-pizza.html">Lunch / Sandwiches / Pizza</a></li>
+<li class="level1 nav-online-catering-menu-boardroom-lunches.html"><a href="http://caterez.charuka.com/online-catering-menu/boardroom-lunches.html">Boardroom Lunches</a></li>
+<li class="level1 nav-online-catering-menu-fork-food.html"><a href="http://caterez.charuka.com/online-catering-menu/fork-food.html">Fork Food</a></li>
+<li class="level1 nav-online-catering-menu-finger-food.html"><a href="http://caterez.charuka.com/online-catering-menu/finger-food.html">Finger Food</a></li>
+<li class="level1 nav-online-catering-menu-fingerfood-platinum-range.html"><a href="http://caterez.charuka.com/online-catering-menu/fingerfood-platinum-range.html">fingerfood platinum range</a></li>
+<li class="level1 nav-online-catering-menu-mini-buffets.html"><a href="http://caterez.charuka.com/online-catering-menu/mini-buffets.html">Mini Buffets</a></li>
+<li class="level1 nav-online-catering-menu-platters.html"><a href="http://caterez.charuka.com/online-catering-menu/platters.html">Platters</a></li>
+<li class="level1 nav-online-catering-menu-salads.html"><a href="http://caterez.charuka.com/online-catering-menu/salads.html">Salads</a></li>
+<li class="level1 nav-online-catering-menu-beverages.html"><a href="http://caterez.charuka.com/online-catering-menu/beverages.html">Beverages</a></li>
+<li class="level1 nav-online-catering-menu-packages.html"><a href="http://caterez.charuka.com/online-catering-menu/packages.html">Packages</a></li>
+<li class="level1 nav-online-catering-menu-bbq.html"><a href="http://caterez.charuka.com/online-catering-menu/bbq.html">BBQ &amp; Carvery</a></li>
+<li class="level1 nav-online-catering-menu-gluten-free.html"><a href="http://caterez.charuka.com/online-catering-menu/gluten-free.html">Gluten Free</a></li>
+<li class="level1 nav-online-catering-menu-staff.html"><a href="http://caterez.charuka.com/online-catering-menu/staff.html">Staff</a></li>
+<li class="level1 nav-online-catering-menu-birthday-slab-cakes.html"><a href="http://caterez.charuka.com/online-catering-menu/birthday-slab-cakes.html">Birthday &amp; Slab Cakes</a></li>
+<li class="level1 nav-online-catering-menu-snacks.html"><a href="http://caterez.charuka.com/online-catering-menu/snacks.html">Snacks</a></li>
+<li class="level1 nav-online-catering-menu-equipment-hire.html"><a href="http://caterez.charuka.com/online-catering-menu/equipment-hire.html">Equipment Hire</a></li>
+<li class="level1 nav-online-catering-menu-miscellaneous.html last"><a href="http://caterez.charuka.com/online-catering-menu/miscellaneous.html">Miscellaneous</a></li>
+</ul>
+</li> -->
+<?php 
+$root_cat_id = Mage::app()->getStore()->getRootCategoryId();
+$root_cat  = Mage::getModel('catalog/category')->load($root_cat_id);
+$root_subcat_id = $root_cat->getChildren();
+//echo $root_subcats; exit;
+$cat = Mage::getModel('catalog/category')->load($root_subcat_id);
+$subcats = $cat->getChildren();
+$last = substr((string)$subcats , -2);
+if (strpos($last ,',') !== false) {
+     $last = substr($subcats , -1);
+    }
+//print($last); exit;
+$_root_sub_category = Mage::getModel('catalog/category')->load($root_subcat_id);
+?>
+<li class="level0 nav-online-catering-menu.html active parent">
+<a href="<?php echo $_root_sub_category->getURL(); ?>"><?php echo $_root_sub_category->getName();?></a>
+		<ul class="level0">
+<?php
+foreach(explode(',',$subcats) as $subCatid)
+{
+  $_category = Mage::getModel('catalog/category')->load($subCatid);
+   $cat_data = $_category->getData();
+  if($_category->getIsActive()) {?>
+  
+     <?php if($last != $subCatid) { ?>
+       <li class="level1 nav-online-catering-menu-<?php echo $cat_data['url_key']; ?>.html"><a href="<?php echo $_category->getURL(); ?>"><?php echo $_category->getName();?></a></li>
+       <?php } else { ?>
+        <li class="level1 nav-online-catering-menu-<?php echo $cat_data['url_key']; ?>.html last"><a href="<?php echo $_category->getURL(); ?>"><?php echo $_category->getName();?></a></li>
+       
+     <?php   }?>
+  <?php
+  }
+}
+
+?>
+       
+        </ul>
+</li>
+		</div>

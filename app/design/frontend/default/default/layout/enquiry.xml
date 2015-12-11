@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+	<default>
+		
+		<reference name="head">
+			
+			<action method="addCss"><name>css/enquiry/enquiry.css</name></action>
+						
+		</reference>
+		
+		
+       
+	</default>
+	<enquiry_index_index>
+		<reference name="content">
+				<block type="enquiry/Enquiryform" name="Enquiry" template="enquiry/enquiryform.phtml" />
+		</reference>
+     </enquiry_index_index>   
+   
+        
+    
+</layout> 

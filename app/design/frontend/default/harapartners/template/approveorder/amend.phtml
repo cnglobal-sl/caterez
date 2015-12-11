@@ -1,0 +1,127 @@
+<?php
+$customer=Mage::getSingleton('customer/session')->getCustomer();
+$_order = $this->getOrder();
+$shippingAddress = $customer->getDefaultShippingAddress();
+?>
+
+<style type="text/css">
+th {
+	width:30%;
+	text-align:left
+}
+
+td {
+	width:50%;
+	text-align:left
+}
+
+</style>
+
+<!-- Added for the datapicker -->
+<link type="text/css" href="<?php echo $this->getSkinUrl('css/smoothness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" />	
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery-1.3.2.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery-ui-1.7.2.custom.min.js') ?>"></script>
+<script type="text/javascript">
+var $j = jQuery.noConflict();
+$j(document).ready(function(){
+    $j("#datepicker").datepicker({
+		minDate: 0,
+		beforeShowDay: $j.datepicker.noWeekends,
+		dateFormat: 'dd/mm/yy',
+		inline: true
+	});
+});
+</script>
+
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="page-head">
+    <h3><?php echo $this->__('Amend Order') ?></h3>
+</div>
+
+
+<form action="<?php echo Mage::getUrl('approveorder/sales/save',array('id'=>$_order->getId())); ?>" id="simpleForm" method="post">
+<?php echo $this->getBlockHtml('formkey')?>
+<input type="hidden" name="customer_id" value="<?php echo $customer->getId() ?>" />
+<fieldset class="group-select">
+<h4 class="legend"><?php echo Mage::helper('checkout')->__('Order Info') ?></h4>
+<table width="95%">
+    <tr>
+        <th><?php echo Mage::helper('checkout')->__('Delivery Venue') ?></th>
+        <td><input name="deliveryvenue" id="deliveryvenue" size="40px" value="<?php echo $_order->getDeliveryVenue()?>" class="input-text" type="text" /></td>
+    </tr>
+    <tr>
+        <th><?php echo Mage::helper('checkout')->__('Number of Guest') ?></th>
+        <td><input name="guest_number" id="guest_number" size="40px" value="<?php echo $this->getGuestNum()?>" class="input-text" type="text" /></td>
+    </tr>
+    <tr>
+        <th><?php echo Mage::helper('checkout')->__('Title of Function') ?></th>
+        <td><input name="function_title" id="function_title" size="40px" value="<?php echo $_order->getFunction()?>" class="input-text" type="text" /></td>
+    </tr>
+    <tr>
+    	<th><?php echo Mage::helper('checkout')->__('Special Request') ?></th>
+        <td><textarea name="request" id="request" class="input-text" rows="5" cols="37"><?php echo $this->getSpecialRequest()?></textarea></td>
+    </tr>
+    <tr>
+        <th><label for="datepicker"><?php echo $this->__('Delivery Date') ?> <span class="required">*</span></label></th>
+        <td><input type="text" name="datepicker" id="datepicker" class="required-entry input-text" value="<?php echo $this->getDeliveryDate()?>"/></td>
+    </tr>
+    <tr>
+        <th><?php echo Mage::helper('checkout')->__('Delivery Time') ?><span class="required">*</span></th>
+        <td>
+          <select name="delivery_time" id="delivery_time" class="required-entry input-text">
+        	<option value=""></option>
+        	<?php $start = 6; $end = 24?>
+        	<?php for($i=$start;$i<12;$i++):?>
+				<?php $value= $i . ':00'?><option value="<?php echo $value?>" <?php echo ($value == $this->getDeliveryTime()) ? 'selected="selected"' : ''?>><?php echo $i . ':00am'?></option>
+				<?php $value= $i . ':15'?><option value="<?php echo $value?>" <?php echo ($value == $this->getDeliveryTime()) ? 'selected="selected"' : ''?>><?php echo $i . ':15am'?></option>
+				<?php $value= $i . ':30'?><option value="<?php echo $value?>" <?php echo ($value == $this->getDeliveryTime()) ? 'selected="selected"' : ''?>><?php echo $i . ':30am'?></option>
+				<?php $value= $i . ':45'?><option value="<?php echo $value?>" <?php echo ($value == $this->getDeliveryTime()) ? 'selected="selected"' : ''?>><?php echo $i . ':45am'?></option>
+			<?php endfor;?>
+        	<?php for($i=12;$i<$end;$i++):?>
+        		<?php $j = ($i==12) ? $i : $i-12?>
+				<?php $value= $i . ':00'?><option value="<?php echo $value?>" <?php echo ($value == $this->getDeliveryTime()) ? 'selected="selected"' : ''?>><?php echo $j . ':00pm'?></option>
+				<?php $value= $i . ':15'?><option value="<?php echo $value?>" <?php echo ($value == $this->getDeliveryTime()) ? 'selected="selected"' : ''?>><?php echo $j . ':15pm'?></option>
+				<?php $value= $i . ':30'?><option value="<?php echo $value?>" <?php echo ($value == $this->getDeliveryTime()) ? 'selected="selected"' : ''?>><?php echo $j . ':30pm'?></option>
+				<?php $value= $i . ':45'?><option value="<?php echo $value?>" <?php echo ($value == $this->getDeliveryTime()) ? 'selected="selected"' : ''?>><?php echo $j . ':45pm'?></option>
+			<?php endfor;?>
+          </select>
+		</td>
+    </tr>
+    <tr>
+        <th><?php echo Mage::helper('checkout')->__('Cleaning Time') ?><span class="required">*</span></th>
+        <td>
+          <select name="cleaning_time" id="cleaning_time" class="required-entry input-text">
+        	<option value=""></option>
+        	<?php $start = 6; $end = 24?>
+        	<?php for($i=$start;$i<12;$i++):?>
+				<?php $value= $i . ':00'?><option value="<?php echo $value?>" <?php echo ($value == $this->getCleaningTime()) ? 'selected="selected"' : ''?>><?php echo $i . ':00am'?></option>
+				<?php $value= $i . ':15'?><option value="<?php echo $value?>" <?php echo ($value == $this->getCleaningTime()) ? 'selected="selected"' : ''?>><?php echo $i . ':15am'?></option>
+				<?php $value= $i . ':30'?><option value="<?php echo $value?>" <?php echo ($value == $this->getCleaningTime()) ? 'selected="selected"' : ''?>><?php echo $i . ':30am'?></option>
+				<?php $value= $i . ':45'?><option value="<?php echo $value?>" <?php echo ($value == $this->getCleaningTime()) ? 'selected="selected"' : ''?>><?php echo $i . ':45am'?></option>
+			<?php endfor;?>
+        	<?php for($i=12;$i<$end;$i++):?>
+        		<?php $j = ($i==12) ? $i : $i-12?>
+				<?php $value= $i . ':00'?><option value="<?php echo $value?>" <?php echo ($value == $this->getCleaningTime()) ? 'selected="selected"' : ''?>><?php echo $j . ':00pm'?></option>
+				<?php $value= $i . ':15'?><option value="<?php echo $value?>" <?php echo ($value == $this->getCleaningTime()) ? 'selected="selected"' : ''?>><?php echo $j . ':15pm'?></option>
+				<?php $value= $i . ':30'?><option value="<?php echo $value?>" <?php echo ($value == $this->getCleaningTime()) ? 'selected="selected"' : ''?>><?php echo $j . ':30pm'?></option>
+				<?php $value= $i . ':45'?><option value="<?php echo $value?>" <?php echo ($value == $this->getCleaningTime()) ? 'selected="selected"' : ''?>><?php echo $j . ':45pm'?></option>
+			<?php endfor;?>
+        </select>
+	  </td>
+    </tr>
+    <?php if($managerEmail = $this->getManagerEmail()):?>
+    <tr>
+    	<th><?php echo Mage::helper('checkout')->__('Manager Approval') ?></th>
+    	<td><input name="manager_email" id="manager_email" size="40px" value="<?php echo $managerEmail?>" class="input-text validate-email" type="text" /></td>
+    </tr>
+    <?php endif;?>
+  </table>
+</fieldset>
+<div class="button-set">
+    <p class="required"><?php echo Mage::helper('checkout')->__('* Required Fields') ?></p>
+    <button class="form-button" type="submit"><span><?php echo Mage::helper('checkout')->__('Amend Order') ?></span></button>
+</div>
+</form>
+<script type="text/javascript">
+    var contactForm = new VarienForm('simpleForm', true);
+</script>

@@ -1,0 +1,132 @@
+<?php
+/*
+ * @copyright  Hara Partners
+ * 
+ */
+?>
+<?php  $_order = $this->getOrder() ?>
+<?php if(!$_order->getApproved()): ?>
+	<div class="page-head">
+		<h3 style="font-size:1.8em; color:red;"><?php echo $this->__('The following order needs your approval') ?></h3>
+	    <a href="<?php echo $this->getUrl('*/*/decision').'id/'.$_order->getIncrementId().'/approve_key/'.$_order->getApproveKey()?>" class="link-cart">
+		
+		<img src="<?php echo $this->getSkinUrl('images/make_decision_btn.gif') ?>" alt="make desision" border="0"/>	
+		
+		</a>
+	</div>
+<?php else: ?>
+	<div class="page-head">
+		<?php $orderStatus = $_order->getStatus()?>
+		<?php if(in_array($orderStatus,array('canceled'))):?>
+			<h3><?php echo $this->__('The following order has been rejected by ') . $_order->getApprovedBy() . '.  Now it is view only' ?></h3>
+		<?php else:?>
+			<h3><?php echo $this->__('The following order has been approved by ') . $_order->getApprovedBy() . '.  Now it is view only' ?></h3>
+		<?php endif;?>
+	</div>
+<?php endif;?>
+	<div class="page-head button-level">
+	    <h4><?php echo $this->__('Order #%s - %s', $_order->getRealOrderId(), $_order->getStatusLabel()) ?></h4>
+	</div>
+
+<p style="font-size:1.4em;"><?php echo $this->__('Date of Order: %s', $this->formatDate($_order->getCreatedAt(), 'long')) ?></p>
+<p style="font-size:1.4em;"><?php echo $this->__('Order Delivery Time: ' . $this->formatTime($_order->getDeliveryDatetime())) . ' ' . $this->formatDate($_order->getDeliveryTime(), 'long') ?></p>
+<p style="font-size:1.4em;"><?php echo $this->__('Order Cleaning Time: ' . $this->formatTime($_order->getCleaningTime())) . ' ' . $this->formatDate($_order->getDeliveryTime(), 'long')?></p>
+
+<?php if (!$_order->getIsVirtual()): ?>
+<div class="col2-set generic-box">
+    <div class="col-1">
+        <h4><?php echo $this->__('Customer Details') ?></h4>
+        <address><?php echo $_order->getShippingAddress()->format('html') ?></address>
+    </div>
+    <div class="col-2">
+        <h4><?php //echo $this->__('Shipping Method') ?></h4>
+        <?php //if ($_order->getShippingDescription()): ?>
+            <?php //echo $_order->getShippingDescription() ?>
+        <?php //else: ?>
+            <?php //echo $this->helper('sales')->__('No shipping information available'); ?>
+        <?php //endif; ?>
+    </div>
+</div>
+<?php endif; ?>
+<!--<div class="col2-set generic-box">
+    <div class="col-1">
+        <h4><?php //echo $this->__('Billing Address') ?></h4>
+        <address><?php //echo $_order->getBillingAddress()->format('html') ?></address>
+    </div>
+    <div class="col-2">
+        <h4><?php //echo $this->__('Payment Method') ?></h4>
+        <?php //echo $this->getPaymentInfoHtml() ?>
+    </div>
+</div>-->
+
+
+
+
+
+
+<h4><?php echo $this->__('Items Ordered') ?></h4>
+
+<table cellspacing="0" class="data-table" id="my-orders-table">
+    <col />
+    <col width="25%" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Product Name') ?></th>
+          <th><?php echo $this->__('Code') ?></th>
+            <th class="a-right"><?php echo $this->__('Price') ?></th>
+            <th class="a-center"><?php echo $this->__('Qty') ?></th>
+            <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+        </tr>
+    </thead>
+    <?php $colspan = 4; ?>
+    <tfoot>
+        <tr>
+            <td colspan="<?php echo $colspan; ?>" class="a-right"><?php echo $this->__('Order Subtotal') ?></td>
+            <td class="last a-right"><?php echo $_order->formatPrice($_order->getSubtotal()) ?></td>
+        </tr>
+        <?php if ($_order->getDiscountAmount() > 0): ?>
+            <tr>
+                <td colspan="<?php echo $colspan; ?>" class="a-right"><?php echo $this->__('Discount '.($_order->getCouponCode()?'('.$_order->getCouponCode().')':'')) ?></td>
+                <td class="last a-right"><?php echo $_order->formatPrice(0.00 - $_order->getDiscountAmount()) ?></td>
+            </tr>
+        <?php endif; ?>
+        <?php //if ($_order->getTaxAmount() > 0): ?>
+        <?php if (($_order->getTaxAmount() > 0)||(Mage::helper('tax')->displayZeroTax())): ?>
+            <?php echo $this->getChildHtml('tax'); ?>
+        <?php endif; ?>
+        <!--<?php if ($_order->getShippingAmount() || $_order->getShippingDescription()): ?>
+            <tr>
+                <td colspan="<?php echo $colspan; ?>" class="a-right"><?php echo $this->__('Shipping & Handling') ?></td>
+                <td class="last a-right"><?php echo $_order->formatPrice($_order->getShippingAmount()) ?></td>
+            </tr>
+        <?php endif; ?>-->
+        <tr>
+            <td colspan="<?php echo $colspan; ?>" class="a-right"><?php echo $this->__('Grand Total') ?></td>
+            <td class="last a-right"><?php echo $_order->formatPrice($_order->getGrandTotal()) ?></td>
+        </tr>
+        <?php if ($_order->isCurrencyDifferent()): ?>
+        <tr>
+            <td colspan="<?php echo $colspan; ?>" class="a-right"><?php echo $this->__('Grand Total to be charged') ?></td>
+            <td class="last a-right"><?php echo $_order->formatBasePrice($_order->getBaseGrandTotal()) ?></td>
+        </tr>
+        <?php endif; ?>
+    </tfoot>
+        <?php $_items = $_order->getItemsCollection(); ?>
+        <?php $_index = 0; ?>
+            <?php $_count = $_items->count(); ?>
+        <?php foreach ($_items as $_item): ?>
+        <?php if ($_item->getParentItem()) continue; ?>
+        <tbody>            
+	        <tr>
+	            <td><?php echo $_item->getName() ?></td>
+	            <td><?php echo $_item->getSku() ?></td>
+	            <td class="a-right"><?php echo $_item->getPrice() ?></td>
+	            <td class="a-center"><?php echo $_item->getQtyOrdered() ?></td>
+	            <td class="a-right"><?php echo $_item->getRowTotal() + $_item->getTaxAmount() ?></td>
+	        </tr>
+        </tbody>
+        <?php endforeach; ?>
+</table>

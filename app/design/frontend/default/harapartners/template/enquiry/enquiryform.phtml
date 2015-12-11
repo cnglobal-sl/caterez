@@ -1,0 +1,41 @@
+<div class="page-head">
+<h3><?php echo Mage::helper('enquiry')->__('Enquiry Form');  ?></h3>
+</div>
+<div id="cng_enquiryform_container">
+<?php 
+
+	echo $message; 
+	
+?>
+
+<form action="<?php echo $url; ?>" method="post" name="enquiryForm" id="enquiryForm">
+<fieldset class="group-select">
+<table id="enquiry_form_container">
+<tr>
+	<td><?php echo Mage::helper('enquiry')->__('Product Name');  ?></td>
+	<td><b><?php echo $this->getRequest()->getParam('enquiry_product'); ?></b> </td>
+</tr>
+	<?php echo $form_fields; ?>
+<tr>
+	<td>&nbsp;</td>
+	<td><span class="required">* Required Fields</span></td>
+</tr>
+<tr>
+<td>
+<input type="hidden" name="enquirypost_sku" value="<?php echo $this->getRequest()->getParam('enquiry_sku'); ?>"/>
+<input type="hidden" name="enquirypost_product" value="<?php echo $this->getRequest()->getParam('enquiry_product'); ?>"/>
+</td>
+<td>
+	<button class="form-button-alt" type="submit">
+		<span>Send</span>
+	</button>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+				var enquiryForm = new VarienForm('enquiryForm', true);
+</script>
+</fieldset>
+</form>
+
+</div>

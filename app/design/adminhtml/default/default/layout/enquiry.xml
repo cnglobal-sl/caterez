@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+    <enquiry_adminhtml_enquiryfields_index>
+        <reference name="content">
+            <block type="enquiry/adminhtml_enquiryfields" name="enquiry" />
+        </reference>
+    </enquiry_adminhtml_enquiryfields_index>
+    <enquiry_adminhtml_enquiryposts_index>
+        <reference name="content">
+            <block type="enquiry/adminhtml_enquiryposts" name="enquiryposts" />
+        </reference>
+    </enquiry_adminhtml_enquiryposts_index>
+</layout>

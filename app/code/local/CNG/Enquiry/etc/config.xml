@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <CNG_Enquiry>
+            <version>1.0.0</version>
+        </CNG_Enquiry>
+    </modules>
+    <frontend>
+    	<translate>
+            <modules>
+                <CNG_Enquiry>
+                    <files>
+                        <default>CNG_Enquiry.csv</default>
+                    </files>
+                </CNG_Enquiry>
+            </modules>
+        </translate>
+        <routers>
+            <enquiry>
+                <use>standard</use>
+                <args>
+                    <module>CNG_Enquiry</module>
+                    <frontName>enquiry</frontName>
+                </args>
+            </enquiry>
+        </routers>
+        <layout>
+            <updates>
+                <enquiry>
+                    <file>enquiry.xml</file>
+                </enquiry>
+            </updates>
+        </layout>
+		<enquiry>
+			<per_page_values>5,10,20,50</per_page_values>
+		</enquiry>
+    </frontend>
+    <admin>
+        <routers>
+			<enquiry>
+				<use>admin</use>
+				<args>
+					<module>CNG_Enquiry</module>
+					<frontName>enquiry</frontName>
+				</args>
+			</enquiry>
+			
+        </routers>
+    </admin>
+    <adminhtml>
+    	<translate>
+            <modules>
+                <CNG_Enquiry>
+                    <files>
+                        <default>CNG_Enquiry.csv</default>
+                    </files>
+                </CNG_Enquiry>
+            </modules>
+        </translate>
+		<menu>
+			<cng module="enquiry" translate="title">
+				<title>CNG</title>
+				<sort_order>70</sort_order> 
+			
+				<children>
+					<items3 module="enquiry" translate="title">
+						<title>Manage Enquiry Fields</title>
+						<sort_order>2</sort_order>
+						<action>enquiry/adminhtml_enquiryfields</action>
+					</items3>
+					<items4 module="enquiry" translate="title">
+						<title>Manage Enquiry Posts</title>
+						<sort_order>3</sort_order>
+						<action>enquiry/adminhtml_enquiryposts</action>
+					</items4>
+					
+				</children>
+			</cng>
+		</menu>
+		
+		<acl>
+            <resources>
+            	<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                	<children>
+						<cng>
+								<title>CNG</title>
+								<sort_order>10</sort_order>
+								<children>
+									<items3 module="enquiry" translate="title">
+										<title>Manage Enquiry Fields</title>
+										<sort_order>2</sort_order>
+										<action>enquiry/adminhtml_enquiryfields</action>
+									</items3>
+									<items4 module="enquiry" translate="title">
+										<title>Manage Enquiry Posts</title>
+										<sort_order>3</sort_order>
+										<action>enquiry/adminhtml_enquiryposts</action>
+									</items4>
+									
+								</children>
+								
+						</cng>
+					</children>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <enquiry>
+                                            <title>Enquiry Section</title>
+                                        </enquiry>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+		<layout>
+			<updates>
+				<enquiry>
+					<file>enquiry.xml</file>
+				</enquiry>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+    	    	
+        <models>
+            <enquiry>
+                <class>CNG_Enquiry_Model</class>
+                <resourceModel>enquiry_mysql4</resourceModel>
+            </enquiry>
+            <enquiry_mysql4>
+                <class>CNG_Enquiry_Model_Mysql4</class>
+                <entities>
+                    <enquiryfields>
+                        <table>enquiryfields</table>
+                    </enquiryfields>
+                     <enquiryposts>
+                        <table>enquiryposts</table>
+                    </enquiryposts>
+                    <enquiryfields_options>
+                        <table>enquiryfields_options</table>
+                    </enquiryfields_options>
+                </entities>
+            </enquiry_mysql4>
+        </models>
+        
+        <resources>
+            <enquiry_setup>
+                <setup>
+                    <module>CNG_Enquiry</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </enquiry_setup>
+            <enquiry_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </enquiry_write>
+            <enquiry_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </enquiry_read>
+        </resources>
+        <blocks>
+            <enquiry>
+                <class>CNG_Enquiry_Block</class>
+            </enquiry>
+        </blocks>
+        <helpers>
+            <enquiry>
+                <class>CNG_Enquiry_Helper</class>
+            </enquiry>
+        </helpers>
+    </global>
+</config>

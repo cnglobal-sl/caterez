@@ -1,0 +1,49 @@
+<?php
+/*
+ * @copyright  Hara Partners
+ * 
+ */
+?>
+
+<?php  $_order = $this->getOrder() ?>
+<div class="page-head">
+    <h4><?php echo $this->__('Order #%s - %s', $_order->getRealOrderId(), $_order->getStatusLabel()) ?></h4>
+</div>
+
+<form action="<?php echo $this->getUrl('*/*/postDecision').'id/'.$_order->getIncrementId().'/approve_key/'.$_order->getApproveKey() ?>" id="decisionForm" method="post">
+    <fieldset class="group-select">
+    	<input type="hidden" name="id" value="<?php echo $_order->getId() ?>" />
+        <h4 class="legend"><?php echo $this->__('Your Decision') ?></h4>
+        <ul>
+        <li>                				
+				<div class="radio">
+					<input type="radio" name="decision" value="approve" checked="checked" />Approve this order
+						<br />
+					<input type="radio" name="decision" value="deny" />Deny this order
+				</div>
+
+                <div class="clear"></div>
+                
+                <div class="input-box">
+                    <label for="name"><?php echo $this->__('Approve by (your name)') ?> <span class="required">*</span></label><br />
+                    <input name="approved_by" id="name" value="" class="required-entry input-text" type="text" />
+                </div>
+                
+                <div class="clear"></div>
+
+                <div class="input-box">
+                    <label for="comment"><?php echo $this->__('Comment') ?></label><br />
+                    <textarea name="comment" id="comment" class="input-text" style="height:150px;width:300px;" cols="50" rows="5"></textarea>
+                </div>
+                </li>
+                </ul>
+    </fieldset>
+	
+    <div class="button-set">
+        <p class="required"><?php echo Mage::helper('approveorder')->__('* Required Fields') ?></p>
+        <button class="form-button" type="submit"><span><?php echo Mage::helper('approveorder')->__('Submit') ?></span></button>
+    </div>
+</form>
+<script type="text/javascript">
+    var decisionForm = new VarienForm('decisionForm', true);
+</script>

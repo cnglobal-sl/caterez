@@ -1,0 +1,103 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+    <?php echo $this->getChildHtml('head') ?>
+</head>
+<body <?php echo $this->getBodyClass()?'class="'.$this->getBodyClass().'"':'' ?>>
+
+<div class="wrapper">
+        <!-- start header -->
+        <div class="header">
+            <div class="header-top-container">
+    <div class="header-top" style="margin-top:-70px;">
+	
+	                        <h1 id="logo"><a href="http://www.caterez.com.au/"><img src="http://www.caterez.com.au/media/caterez-logo.png" alt="Caterez Online" border="0" usemap="#Map" /> 
+            <map name="Map" id="Map"> 
+              <area shape="rect" coords="710,58,919,81" href="mailto:admin@caterez.com.au" alt="email caterez" /> 
+            </map> 
+        </a></h1>
+
+        <p class="no-display"><a href="#main"><strong><?php echo $this->__('Skip to Main Content') ?> &raquo;</strong></a></p>
+		<div class="welcome"><p align="right"><?php echo $this->getWelcome() ?></p></div>
+
+    </div>
+</div>
+        </div>
+        <!-- end header -->
+
+        <!-- start middle -->
+        <div class="middle-container">
+            <div class="middle col-1-layout">
+                <?php echo $this->getChildHtml('breadcrumbs') ?>
+            <!-- start center -->
+                 <div id="main" class="col-main" style="background-color:#121212;">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="25%" align="center"><a href="http://caterez.charuka.com/weekly-menus"><img src="/media/weekly_menu.gif" alt="" width="135" height="137" /></a></td>
+    <td width="25%" align="center"><a href="http://caterez.charuka.com/caterez-club"><img src="/media/caterez_club.gif" alt="" width="135" height="137" /></a></td>
+    <td width="25%" align="center"><a href="http://caterez.charuka.com/gift-card"><img src="/media/caterez_gift_card.gif" alt="" width="135" height="137" /></a></td>
+    <td width="25%" align="center"><a href="http://caterez.charuka.com/gallery"><img src="/media/gallery.gif" alt="" width="135" height="137" /></a></td>
+  </tr>
+  <tr>
+    <td height="40" colspan="4" align="center">&nbsp;</td>
+
+    </tr>
+  <tr>
+    <td align="center"><a href="http://caterez.charuka.com/online-catering-menu.html"><img src="/media/online_catering.gif" alt="" width="135" height="137" /></a></td>
+    <td align="center"><a href="http://caterez.charuka.com/caterez-special"><img src="/media/caterez_special.gif" alt="" width="135" height="137" /></a></td>
+    <td align="center"><a href="http://caterez.charuka.com/upcoming-events"><img src="/media/upcoming_events.gif" alt="" width="135" height="137" /></a></td>
+    <td align="center"><a href="http://caterez.charuka.com/contacts"><img src="/media/your_suggestion.gif" alt="" width="135" height="137" /></a></td>
+  </tr>
+</table>
+
+                </div>
+            <!-- end center -->
+
+            </div>
+        </div>
+        <!-- end middle -->
+
+        <!-- start footer -->
+        <div class="footer-container">
+            <div class="footer">
+                <?php echo $this->getChildHtml('footer') ?>
+            </div>
+        </div>
+        <!-- end footer -->
+        <?php echo $this->getChildHtml('before_body_end') ?>
+</div>
+<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>

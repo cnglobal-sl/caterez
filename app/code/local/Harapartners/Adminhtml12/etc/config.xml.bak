@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <global>
+        <block>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_grid>Harapartners_Adminhtml_Block_Sales_Order_grid</sales_order_grid>
+                </rewrite>
+            </adminhtml>
+        </block>
+    </global>
+</config>

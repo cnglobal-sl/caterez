@@ -1,0 +1,80 @@
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h4 class="icon-head head-account"><?php echo $this->__('Quotation Management') ?></h4>
+	</div>
+	<fieldset>
+            <table class="form-list" cellspacing="0">
+                <tbody>
+                 <tr>
+                    <td class="label"><label><?php echo $this->__('Quote Expires On') ?></label></td>
+                    <?php
+                            $expiry= Mage::helper('qquoteadv')->getExpiryDate($quote['quote_id']);
+                            $m = substr($expiry, 5, 2);
+                            $d = substr($expiry, 8, 2);
+                            $y = substr($expiry, 0, 4);
+                            $expiryFormatted = $m."/".$d."/".$y;
+                    ?>
+                    <td><div style="margin-top:3px;"><input type="text" style="width:70px;" name="expiry" id="expiry" value="<?php echo $expiryFormatted; ?>" />
+                        <img id="expiry_trig" style="position:relative; top: 1px;" src="<?php echo $this->getSkinUrl('images/grid-cal.gif'); ?>" />
+                        
+                        <?php  $checked = ($quote['no_expiry'])? ' checked="checked"': ''; ?>
+                        
+                        <input style="margin-left:30px;" type="checkbox" name="no_expiry" <?php echo $checked; ?> /> 
+                        <label style="margin-left:3px;"><?php echo $this->__('Do not Expire'); ?></label>
+                        
+                        </div>
+                        
+                        <p class="note" ><span><?php echo $this->__('On this date a reminder will be sent to the customer and assigned sales representative'); ?></span></p>
+                    </td>
+                </tr>
+                
+                
+                <?php //$name = trim($this->getAdminName($quote['user_id']));?>
+                <?php //$email = trim(Mage::helper('qquoteadv')->getAdminEmail($quote['quote_id']));?>
+                <?php $admins = Mage::helper('qquoteadv')->getAdmins();?>
+              
+                
+                
+                <tr >
+                    <td class="label" style="padding:10px 0px;"><label><?php echo $this->__('Assigned To') ?></label></td>
+                    <td style="padding:10px 0px;"> <select name="assigned_to">
+                            <?php if(!isset($quote['user_id']) or $quote['user_id'] == 0)
+                                    $quote['user_id'] =  Mage::getSingleton('admin/session')->getUser()->getId(); ?>
+                            <?php foreach($admins as $admin): ?>
+                            
+                            <option value="<?php echo $admin->getData('user_id'); ?>" 
+                                    <?php if ($quote['user_id'] == $admin->getData('user_id')): ?>
+                                        selected="selected"
+                                    <?php endif; ?>
+                            >
+                                    <?php echo $admin->getData('firstname')." ".$admin->getData('lastname'); ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                        
+                        
+                        
+                        </td>
+                </tr>
+                <tr>
+                    <td class="label"><label><?php echo $this->__('General Comment') ?></label></td>
+                    <td>
+                        <textarea   style="width:98%;" name="client_request" id="client_request"  rows="4"><?php echo $this->htmlEscape($quote['client_request']) ?></textarea>
+                    </td>
+                </tr>
+               <tbody> 
+            </table>
+				
+	</fieldset>
+</div>
+<script type="text/javascript" >
+    //<![CDATA[
+        Calendar.setup({
+            inputField:"expiry",
+            ifFormat:"%m/%d/%Y",
+            showTime:false,
+            button: "expiry_trig",
+            align:"Bl",
+            singleClick: true
+        })
+</script>

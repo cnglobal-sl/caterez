@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="root">
+           <action method="setTemplate"><template>page/1column.phtml</template></action>
+       </reference>
+    </default>
+
+    <approveorder_view_decision>
+		<reference name="content">
+			<block type="cms/block" name="approve-order">
+				<action method="setBlockId"><block_id>approve-order</block_id></action>
+			</block>
+		</reference>
+        <reference name="content">
+            <block type="core/template" name="approveorderForm" template="approveorder/decision.phtml"/>
+        </reference>
+    </approveorder_view_decision>
+</layout>

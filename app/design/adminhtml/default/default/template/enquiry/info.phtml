@@ -1,0 +1,20 @@
+
+<?php
+$dataitems = $this->getFieldset();
+
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo Mage::helper('enquiry')->__('Enquiry Details') ?></h4></div>
+    <fieldset>
+        <table cellspacing="2" class="box-center" width="100%">
+        	<?php foreach($dataitems as $dataitem){ ?>
+            <tr>
+                <td width="20%"><strong><?php echo $dataitem['label']; ?> </strong></td>
+                <td width="5%" align="center"><strong>:</strong></td>
+                <td><?php echo $dataitem['value']; ?> </td>
+            </tr>
+            <?php } ?>
+        </table>
+       
+    </fieldset>
+</div>

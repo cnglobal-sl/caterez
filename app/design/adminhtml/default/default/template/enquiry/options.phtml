@@ -1,0 +1,55 @@
+<?php
+$options = $this->getoptionset();
+$option_no=count($options);
+?>
+
+<div class="entry-edit">
+	<script type="text/javascript">
+	function makeoptionlist(){
+		//alert('aaaaaaaaaaa');
+		var options_field=document.getElementById('no_of_options');
+		option_number=parseInt(options_field.value);
+		option_html='<table cellpading="3" cellspacing="2">';
+		for(i=1;i<=option_number;i++){
+			//alert(i);
+			option_html=option_html+'<tr><td>';
+			option_html=option_html+'<input type="text" name="option'+i+'" id="option'+i+'" />';
+			option_html=option_html+'<td></tr>';
+		}
+		option_html=option_html+'</table>';
+		var option_container=document.getElementById('option_container');
+		option_container.innerHTML=option_html;
+	}
+	
+	</script>
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo Mage::helper('enquiry')->__('Option Values') ?></h4></div>
+    
+    <fieldset>
+    Number of Options : 
+    <input type="text" name="no_of_options" id="no_of_options" size="10" value="<?php echo $option_no?$option_no:1; ?>"/>
+    <button style="" onclick="makeoptionlist()" class="scalable" type="button" id="make_options"><span>Make Options List</span></button>
+    <br/>
+    <div id="option_container">
+    
+    <?php 
+		if($option_no >= 1){
+			if($options){
+				echo '<table cellpading="3" cellspacing="2">';
+				$i=1;
+					
+						foreach($options as $option){
+							echo '<tr><td>';
+							echo '<input type="text" name="option'.$i.'" name="option'.$i.'" value="'.$option['fieldsoptions_value'].'" />';
+							echo '</td></tr>';
+							$i++;
+						}
+					
+				echo '</table>';
+			}
+		}
+    ?>	
+    </div>
+        
+       
+    </fieldset>
+</div>

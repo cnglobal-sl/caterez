@@ -1,0 +1,67 @@
+<div id="checkout-review" class="onestepcheckout_block">
+    <!--<div class="op_block_title" id="review"><?php //echo $this->__('Review Your Order') ?></div>-->
+    <!--<div id="checkout-review-load">-->
+        <?php //echo $this->getChildHtml('info') ?>
+    <!--</div>-->
+    <div id="checkout-review-submit">    
+    
+    <div>      	
+        	Do you need Manager Approval?&nbsp;&nbsp;
+        	<input type="radio" onclick="hideApprove()" checked="checked" value="0" name="need_approval"> No&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" onclick="showApprove()" value="1" name="need_approval"> Yes
+        </div>
+        <div style="display: none;" class="input-box" id="approve">
+        	<b>Manager Approval</b>&nbsp;&nbsp;
+          	<input type="text" class="required-entry input-text validate-email" value="" size="40px" id="manager_email" name="manager_email">
+        </div>
+        
+        
+        <div class="buttons-set" id="review-buttons-container">
+        
+<!-- Heard Us -->
+        
+	<?php 
+ 
+ 		/*$hearus_conditions =(Mage::getStoreConfig('onestepcheckout/heardus/enabled'));
+ 		$hearus_values_admin = (Mage::getStoreConfig('onestepcheckout/heardus/output'));
+ 
+	if ($hearus_conditions == 1) : ?> 
+    
+   	<div class="hearedus">
+
+        	<?php 
+					echo $this->__('How did you hear about us?'); 
+					
+			?>
+       <p>      
+           <?php $hearus_values_users =  explode(',',$hearus_values_admin) ?>
+         	  <select>
+				 	 <?php  for($i=0;$i<sizeof($hearus_values_users);$i++){ ?>
+						
+                          <option value="<?php echo $hearus_values_users[$i]; ?>"><?php echo $hearus_values_users[$i]; ?></option>
+					  
+					<?php }?>
+		  </select>
+   	  </p>
+   	  
+    </div>
+       
+    <?php endif; */ ?>   
+     
+<!-- Heard Us -->
+       
+        <button type="submit" title="<?php echo $this->__('Place Order Now') ?>" class="button btn-checkout" onclick="checkout.save(); return false;"><?php echo $this->__('Place Order Now') ?></button>
+            <span id="review-please-wait" style="display:none;float:right;">
+                <img src="<?php echo $this->getSkinUrl('images/onestepcheckout/opc-ajax-loader_onestepcheckout.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+            </span>
+        </div>
+    </div>
+</div>
+<script>
+function hideApprove() {
+
+	$('approve').hide();
+}
+function showApprove() {
+	$('approve').show();
+}
+</script>

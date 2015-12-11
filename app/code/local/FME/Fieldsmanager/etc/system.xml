@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!--
+/*////////////////////////////////////////////////////////////////////////////////
+ \\\\\\\\\\\\\\\\\\\\\\\\\  FME Fieldsmanager extension  \\\\\\\\\\\\\\\\\\\\\\\\\
+ /////////////////////////////////////////////////////////////////////////////////
+ \\\\\\\\\\\\\\\\\\\\\\\\\ NOTICE OF LICENSE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+ ///////                                                                   ///////
+ \\\\\\\ This source file is subject to the Open Software License (OSL 3.0)\\\\\\\
+ ///////   that is bundled with this package in the file LICENSE.txt.      ///////
+ \\\\\\\   It is also available through the world-wide-web at this URL:    \\\\\\\
+ ///////          http://opensource.org/licenses/osl-3.0.php               ///////
+ \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+ ///////                      * @category   FME                            ///////
+ \\\\\\\                      * @package    FME_Fieldsmanager              \\\\\\\
+ ///////    * @author     Malik Tahir Mehmood <malik.tahir786@gmail.com>   ///////
+ \\\\\\\                                                                   \\\\\\\
+ /////////////////////////////////////////////////////////////////////////////////
+ \\* @copyright  Copyright 2010 © free-magentoextensions.com All right reserved\\\
+ /////////////////////////////////////////////////////////////////////////////////
+ */
+
+
+-->
+<config>
+    <tabs>
+	<fme_extensions translate="label" module="fieldsmanager">
+	    <label>FME Extensions</label>
+	    <sort_order>100</sort_order>
+	</fme_extensions>
+    </tabs>
+   <sections>
+       <fieldsmanager>
+            <label>Fieldsmanager</label>
+            <tab>fme_extensions</tab>
+             <class>separator-top</class>
+            <frontend_type>text</frontend_type>
+            <sort_order>150</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+		<groups>
+                    <general translate="label">
+                        <label>General</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>0</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                        <fields>
+			    <enable translate="label">
+                                <label>Enable Fields Manager</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>10</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </enable>
+			    <heading translate="label">
+                                <label>Enter Heading for the Fieldset of Fields Manager</label>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>20</sort_order>
+				<comment>Heading will only be used where fieldsets are used.</comment>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+				<validate>required-entry</validate>
+                            </heading>
+                           
+                        </fields>
+                    </general>
+		    <time translate="label">
+                        <label>Split Order Time Settings</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>10</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                        <fields>
+			    <splitdeliverytime translate="label">
+                                <label>Enter Delivery Time Slots</label>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>10</sort_order>
+				<comment>separate each timeslot with comma and avoid spaces. For example: 9:00,10:00</comment>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+				<validate>required-entry</validate>
+                            </splitdeliverytime>
+			    <splitcleaningtime translate="label">
+                                <label>Enter Cleaning Time Slots</label>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>20</sort_order>
+				<comment>separate each timeslot with comma and avoid spaces. For example: 9:00,10:00</comment>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+				<validate>required-entry</validate>
+                            </splitcleaningtime>
+                           
+                        </fields>
+                    </time>
+                </groups>
+        </fieldsmanager>
+    </sections>
+</config>
